@@ -57,6 +57,17 @@ source .venv/bin/activate
 python -m pip install -e .
 ```
 
+Editable installation uses the standard setuptools build backend. If you are offline or do not want to install the package, run from the repository root with the source directory on `PYTHONPATH`:
+
+```bash
+# macOS / Linux
+PYTHONPATH=src python -m traceveil audit --workspace examples/minimal
+
+# Windows PowerShell
+$env:PYTHONPATH = "src"
+python -m traceveil audit --workspace examples/minimal
+```
+
 Run the included synthetic workspace:
 
 ```bash
@@ -67,6 +78,12 @@ Or run it without installing the console command:
 
 ```bash
 python -m traceveil audit --workspace examples/minimal
+```
+
+This writes `examples/minimal/traceveil-report.json`. Choose another report path with `--output`:
+
+```bash
+python -m traceveil audit --workspace examples/minimal --output build/review.json
 ```
 
 ## Run the included sample corpus
@@ -80,11 +97,11 @@ python -m traceveil audit \
   --output build/sample-corpus-report.json
 ```
 
-The preparation command copies the evidence into a self-contained workspace and normalizes the request, identity history, policy, and evidence-manifest files. It refuses to overwrite an existing destination; remove `build/sample-corpus-workspace` before preparing it again, or choose another destination with `--output` on the preparation command. The corpus is fictional and useful for experimenting with the workflow. Its request-language authorization mapping is deliberately conservative but heuristic, so review those inputs and the generated findings before using any result for real decisions.
+The preparation command copies the evidence into a self-contained workspace and normalizes the request, identity history, policy, and evidence-manifest files. It refuses to overwrite an existing destination; remove `build/sample-corpus-workspace` before preparing it again, or choose another destination with `--output` on the preparation command. The corpus is fictional and useful for experimenting with the workflow. Its request-language authorization mapping is heuristic, so review those inputs and generated findings before using any result for real decisions.
 
 To use your own corpus, create the four workspace CSV files described below and point `traceveil audit --workspace` at that directory. The optional `tools/prepare_workspace.py --source PATH --output PATH` adapter demonstrates how to normalize another source corpus.
 
-The report is written to `examples/minimal/traceveil-report.json`. Choose another location with `--output`:
+To choose a different report path for the minimal example, pass `--output`:
 
 ```bash
 python -m traceveil audit \
@@ -93,6 +110,16 @@ python -m traceveil audit \
 ```
 
 Use `--verbose` to display parser warnings. Missing optional PDF or OCR tools are reported and the audit continues with other sources.
+
+## Verify the installation
+
+Run the dependency-free end-to-end regression from the repository root:
+
+```bash
+python -m unittest discover -s tests -v
+```
+
+The regression invokes the CLI against a fresh copy of the minimal workspace and checks its decisions, findings, remediation, and retained-record verification. For a full-corpus smoke run, use the commands above and confirm the CLI reports that it audited 518 requests.
 
 ## Workspace format
 
@@ -176,6 +203,7 @@ src/traceveil/       CLI, evidence readers, identity matching, and audit engine
 examples/minimal/    Synthetic end-to-end workspace
 data/sample-corpus/  Fictional sample input corpus and evidence files
 tools/               Corpus-to-workspace preparation utility
+tests/                Standard-library end-to-end regression
 PROBLEM_STATEMENT.md Generic product problem and output contract
 ```
 
@@ -186,6 +214,8 @@ Install optional extractors as needed:
 ```bash
 python -m pip install -e ".[pdf,ocr]"
 ```
+
+The `ocr` extra installs Python packages only. Image OCR also requires the Tesseract executable to be installed on the operating system and available on `PATH`. If Tesseract is missing, Traceveil logs that OCR was skipped and continues with the other evidence.
 
 The project has no required third-party runtime dependencies. Keep personal workspaces, generated reports, secrets, and real customer data out of version control. See [`.gitignore`](.gitignore).
 
