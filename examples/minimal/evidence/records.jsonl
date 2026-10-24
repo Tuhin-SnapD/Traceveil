@@ -1,0 +1,5 @@
+{"resource_id":"profile-001","system_id":"account-api","category":"customer_profile","state":"PRESENT","subject_id":"person-001","full_name":"Ava Chen","email":"ava.chen@example.test","phone":"+1-202-555-0147"}
+{"resource_id":"search-doc-001","system_id":"search-index","category":"search_document","state":"ABSENT","subject_id":"person-001"}
+{"resource_id":"analytics-001","system_id":"analytics","category":"analytics_profile","state":"PRESENT","subject_id":"person-001","aggregate":"returning","metric":"visits-30d","cohort":"silver"}
+{"resource_id":"sync-001","system_id":"warehouse-sync","category":"sync_flow","state":"ACTIVE","subject_id":"person-001","enabled":true}
+{"resource_id":"audit-001","system_id":"compliance-ledger","category":"audit_event","state":"PRESENT","subject_id":"person-001","event_type":"deletion-request-received","created_at":"2026-03-01T09:00:00Z"}

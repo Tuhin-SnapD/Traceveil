@@ -1,0 +1,23 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "traceveil"
+version = "0.1.0"
+description = "Evidence-first privacy deletion auditing across distributed systems"
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "MIT" }
+authors = [{ name = "Traceveil contributors" }]
+dependencies = []
+
+[project.optional-dependencies]
+pdf = ["pypdf>=4"]
+ocr = ["Pillow>=10", "pytesseract>=0.3"]
+
+[project.scripts]
+traceveil = "traceveil.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]

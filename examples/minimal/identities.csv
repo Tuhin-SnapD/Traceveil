@@ -1,0 +1,6 @@
+subject_id,identifier_type,identifier_value,valid_from,valid_to,confidence,source_ref
+person-001,subject_id,person-001,2025-01-01T00:00:00Z,,verified,identity-registry
+person-001,email,ava.chen@example.test,2025-01-01T00:00:00Z,,verified,identity-registry
+person-001,phone,+1-202-555-0147,2025-01-01T00:00:00Z,,high,identity-registry
+person-002,subject_id,person-002,2025-01-01T00:00:00Z,,verified,identity-registry
+person-002,email,eli.rivera@example.test,2025-01-01T00:00:00Z,,verified,identity-registry

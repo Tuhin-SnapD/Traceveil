@@ -1,0 +1,7 @@
+category,required_action,allowed_fields
+customer_profile,DELETE,
+search_document,DELETE,
+analytics_profile,ANONYMIZE,aggregate;metric;cohort
+sync_flow,DELETE,
+audit_event,RETAIN,subject_id;event_type;created_at
+backup_archive,RETAIN,subject_id;archive_id;retention_until

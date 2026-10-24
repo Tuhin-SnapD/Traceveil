@@ -1,0 +1,21 @@
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+build/
+dist/
+.coverage
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Local workspaces and reports may contain personal data.
+workspace/
+traceveil-report.json
+examples/*/traceveil-report.json
+*.local.csv
+*.local.json
+.env
+.env.*
+!.env.example
