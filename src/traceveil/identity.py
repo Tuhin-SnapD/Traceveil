@@ -67,3 +67,13 @@ def exact_matches(record: dict[str, Any], identifiers: dict[str, tuple[str, str]
             identifier_type, source_ref = identity
             matches.append({"field": "document_text", "identifier_type": identifier_type, "source_ref": source_ref})
     return matches
+
+
+def contains_identifier_text(value: Any, identifiers: set[str]) -> bool:
+    text = normalize(value)
+    for token in identifiers:
+        if len(token) < 5:
+            continue
+        if re.search(r"(?<![A-Za-z0-9@._+-])" + re.escape(token) + r"(?![A-Za-z0-9@._+-])", text):
+            return True
+    return False

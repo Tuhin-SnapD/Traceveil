@@ -8,7 +8,7 @@ from datetime import datetime
 from pathlib import Path
 from typing import Any
 
-from .identity import exact_matches, normalize, parse_time, scalar_fields
+from .identity import contains_identifier_text, exact_matches, normalize, parse_time, scalar_fields
 from .models import AuditResult, Policy
 from .readers import read_csv, read_evidence
 
@@ -66,7 +66,7 @@ def _field_violations(record: dict[str, Any], allowed_fields: frozenset[str], id
         if not isinstance(value, (str, int, float)) or value is None:
             continue
         field = normalize(field_name)
-        if field not in allowed_fields and (normalize(value) in identity_values or field in direct_identifier_fields):
+        if field not in allowed_fields and (normalize(value) in identity_values or contains_identifier_text(value, identity_values) or field in direct_identifier_fields):
             violations.append(field)
     return sorted(set(violations))
 

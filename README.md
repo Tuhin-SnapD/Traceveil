@@ -69,6 +69,21 @@ Or run it without installing the console command:
 python -m traceveil audit --workspace examples/minimal
 ```
 
+## Run the included sample corpus
+
+Traceveil also includes a larger fictional deletion-audit corpus under `data/sample-corpus/`. Prepare it into the generic workspace format, then audit it:
+
+```bash
+python tools/prepare_workspace.py
+python -m traceveil audit \
+  --workspace build/sample-corpus-workspace \
+  --output build/sample-corpus-report.json
+```
+
+The preparation command copies the evidence into a self-contained workspace and normalizes the request, identity history, policy, and evidence-manifest files. It refuses to overwrite an existing destination; remove `build/sample-corpus-workspace` before preparing it again, or choose another destination with `--output` on the preparation command. The corpus is fictional and useful for experimenting with the workflow. Its request-language authorization mapping is deliberately conservative but heuristic, so review those inputs and the generated findings before using any result for real decisions.
+
+To use your own corpus, create the four workspace CSV files described below and point `traceveil audit --workspace` at that directory. The optional `tools/prepare_workspace.py --source PATH --output PATH` adapter demonstrates how to normalize another source corpus.
+
 The report is written to `examples/minimal/traceveil-report.json`. Choose another location with `--output`:
 
 ```bash
@@ -159,6 +174,8 @@ PDF and image extraction are best-effort optional capabilities. Install the rele
 ```text
 src/traceveil/       CLI, evidence readers, identity matching, and audit engine
 examples/minimal/    Synthetic end-to-end workspace
+data/sample-corpus/  Fictional sample input corpus and evidence files
+tools/               Corpus-to-workspace preparation utility
 PROBLEM_STATEMENT.md Generic product problem and output contract
 ```
 
